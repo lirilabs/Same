@@ -1,5 +1,4 @@
 import { Octokit } from "@octokit/rest";
-import { decrypt } from "../_lib/encrypt.js";
 import { readJSON } from "../_lib/github.js";
 
 const octokit = new Octokit({
@@ -28,7 +27,7 @@ export default async function handler(req, res) {
 
     const items = [];
 
-    // 2️⃣ Read each file
+    // 2️⃣ Read each JSON file
     for (const file of listRes.data) {
       if (!file.name.endsWith(".json")) continue;
 
@@ -36,17 +35,13 @@ export default async function handler(req, res) {
       if (!Array.isArray(json)) continue;
 
       for (const entry of json) {
-        try {
-          items.push({
-            id: entry.id,
-            text: decrypt(entry.raw_encrypted),
-            uid: entry.uid,
-            semantic: entry.semantic,
-            ts: entry.ts
-          });
-        } catch {
-          // skip broken entries
-        }
+        items.push({
+          id: entry.id,
+          raw_encrypted: entry.raw_encrypted, // 🔐 still encrypted
+          uid: entry.uid,
+          semantic: entry.semantic,
+          ts: entry.ts
+        });
       }
     }
 
@@ -59,7 +54,7 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    console.error("READ FEED CRASH:", err);
+    console.error("READ FEED ERROR:", err);
     return res.status(500).json({
       error: "Internal error",
       detail: err.message
