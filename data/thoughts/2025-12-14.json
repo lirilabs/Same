@@ -12,5 +12,23 @@
       "themes": [],
       "context_keywords": []
     }
+  },
+  {
+    "id": "t_mj62tqwq",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765738018768,
+    "raw_encrypted": "n5npT1o7yVrS5l8G.5EUAMsirfmuDDaXbUsoPvA==.WCvSJ28X0KlGMVGyJUUaUByRz/kutRDQ2AT/jfKg/0qsLmIisCDIF2gsmBNiwFNfzbo9xfpRXTDH89eqykr7dK4brbiu4MalIvhHmG8R6cOCNkZ3GRbObZ+NNA==",
+    "semantic": {
+      "emotion": "anxiety",
+      "emotion_intensity": 4,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "uncertainty",
+        "confusion",
+        "stress"
+      ]
+    }
   }
 ]
