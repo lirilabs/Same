@@ -3,4 +3,4 @@ export const CACHE = {
   indexLoadedAt: 0
 };
 
-export const INDEX_TTL = 60 * 1000; // 60 seconds
+export const INDEX_TTL = 60 * 1000;
