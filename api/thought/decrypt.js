@@ -11,8 +11,6 @@ const repo = process.env.GITHUB_REPO;
 const branch = process.env.GITHUB_BRANCH;
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-
   const { id } = req.query;
 
   if (!id) {
@@ -20,7 +18,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1️⃣ List files in data/thoughts/
     const listRes = await octokit.repos.getContent({
       owner,
       repo,
@@ -32,7 +29,6 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: "No thoughts folder" });
     }
 
-    // 2️⃣ Scan files
     for (const file of listRes.data) {
       if (!file.name.endsWith(".json")) continue;
 
@@ -42,21 +38,15 @@ export default async function handler(req, res) {
       const post = json.find(p => p.id === id);
       if (!post) continue;
 
-      // 3️⃣ Decrypt
       const text = decrypt(post.raw_encrypted);
-
-      return res.json({
-        id,
-        text
-      });
+      return res.json({ id, text });
     }
 
     return res.status(404).json({ error: "Post not found" });
 
   } catch (err) {
-    console.error("DECRYPT ERROR:", err);
     return res.status(500).json({
-      error: "Internal error",
+      error: "Decrypt failed",
       detail: err.message
     });
   }
