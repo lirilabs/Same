@@ -33,5 +33,19 @@
       "themes": [],
       "context_keywords": []
     }
+  },
+  {
+    "id": "t_mj5ylfzd",
+    "uid": "dddddddd",
+    "ts": 1765730912892,
+    "raw_encrypted": "ub6ptH7rAMWeYQ9b.K1axocnWmVpneDULYQAmZg==.pO/kbSXD",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "self",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
   }
 ]
