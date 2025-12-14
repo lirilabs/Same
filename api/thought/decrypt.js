@@ -13,17 +13,14 @@ const branch = process.env.GITHUB_BRANCH;
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
-  const { id, uid } = req.query;
+  const { id } = req.query;
 
-  // 🔴 HARD VALIDATION
-  if (!id || !uid) {
-    return res.status(400).json({
-      error: "Missing id or uid"
-    });
+  if (!id) {
+    return res.status(400).json({ error: "Missing id" });
   }
 
   try {
-    // 1️⃣ List thought files
+    // 1️⃣ List files in data/thoughts/
     const listRes = await octokit.repos.getContent({
       owner,
       repo,
@@ -32,10 +29,10 @@ export default async function handler(req, res) {
     });
 
     if (!Array.isArray(listRes.data)) {
-      return res.status(404).json({ error: "No thoughts found" });
+      return res.status(404).json({ error: "No thoughts folder" });
     }
 
-    // 2️⃣ Search every file
+    // 2️⃣ Scan files
     for (const file of listRes.data) {
       if (!file.name.endsWith(".json")) continue;
 
@@ -45,26 +42,19 @@ export default async function handler(req, res) {
       const post = json.find(p => p.id === id);
       if (!post) continue;
 
-      // 3️⃣ Permission check
-      if (post.uid !== uid) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
+      // 3️⃣ Decrypt
+      const text = decrypt(post.raw_encrypted);
 
-      // 4️⃣ Decrypt safely
-      let text;
-      try {
-        text = decrypt(post.raw_encrypted);
-      } catch {
-        return res.status(500).json({ error: "Decrypt failed" });
-      }
-
-      return res.json({ id, text });
+      return res.json({
+        id,
+        text
+      });
     }
 
     return res.status(404).json({ error: "Post not found" });
 
   } catch (err) {
-    console.error("DECRYPT CRASH:", err);
+    console.error("DECRYPT ERROR:", err);
     return res.status(500).json({
       error: "Internal error",
       detail: err.message
