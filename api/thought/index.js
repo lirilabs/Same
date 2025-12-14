@@ -24,8 +24,17 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Invalid text" });
     }
 
-    // ---------------- AI ----------------
-    const semantic = await classifyThought(text);
+    // ---------------- AI (FAIL-SAFE) ----------------
+    let semantic;
+    try {
+      semantic = await classifyThought(text);
+    } catch (e) {
+      semantic = {
+        emotion: "unknown",
+        domain: "unknown",
+        intent: "reflection"
+      };
+    }
 
     // ---------------- ENCRYPT ----------------
     const encrypted = encrypt(text);
@@ -35,20 +44,24 @@ export default async function handler(req, res) {
     const today = new Date().toISOString().slice(0, 10);
     const path = `data/thoughts/${today}.json`;
 
-    const { json = [], sha } = await readJSON(path);
+    const result = await readJSON(path);
+    const list = Array.isArray(result.json) ? result.json : [];
+    const sha = result.sha;
 
-    json.push({
+    list.push({
       id,
       ts: Date.now(),
       raw_encrypted: encrypted,
       semantic
     });
 
-    await writeJSON(path, json, sha);
+    await writeJSON(path, list, sha);
 
     // ---------------- INDEX ----------------
-    const key = `${semantic.emotion}|${semantic.domain}|${semantic.intent}`;
-    await updateIndex(key, id);
+    if (semantic?.emotion && semantic?.domain && semantic?.intent) {
+      const key = `${semantic.emotion}|${semantic.domain}|${semantic.intent}`;
+      await updateIndex(key, id);
+    }
 
     return res.json({
       status: "ok",
