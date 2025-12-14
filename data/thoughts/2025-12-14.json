@@ -1,0 +1,16 @@
+[
+  {
+    "id": "t_mj62tk2w",
+    "uid": "dd",
+    "ts": 1765738009897,
+    "raw_encrypted": "KmHmKqZsRHgNp4yb.3d/CsV1or9RGibXwIkiH4A==.4TMh",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 0,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
+  }
+]
