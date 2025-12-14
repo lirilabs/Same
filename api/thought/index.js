@@ -4,76 +4,37 @@ import { readJSON, writeJSON } from "../_lib/github.js";
 import { updateIndex } from "../_lib/indexer.js";
 
 export default async function handler(req, res) {
-  // ---------------- CORS ----------------
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  if (req.method !== "POST") {
+  if (req.method !== "POST")
     return res.status(405).json({ error: "POST only" });
-  }
 
-  try {
-    // ---------------- INPUT ----------------
-    const { text } = req.body || {};
-    if (!text || typeof text !== "string" || text.length > 200) {
-      return res.status(400).json({ error: "Invalid text" });
-    }
+  const { text } = req.body || {};
+  if (!text || text.length > 200)
+    return res.status(400).json({ error: "Invalid text" });
 
-    // ---------------- AI (FAIL-SAFE) ----------------
-    let semantic;
-    try {
-      semantic = await classifyThought(text);
-    } catch (e) {
-      semantic = {
-        emotion: "unknown",
-        domain: "unknown",
-        intent: "reflection"
-      };
-    }
+  const semantic = await classifyThought(text);
+  const encrypted = encrypt(text);
 
-    // ---------------- ENCRYPT ----------------
-    const encrypted = encrypt(text);
+  const id = `t_${Date.now().toString(36)}`;
+  const today = new Date().toISOString().slice(0, 10);
+  const path = `data/thoughts/${today}.json`;
 
-    // ---------------- STORE ----------------
-    const id = `t_${Date.now().toString(36)}`;
-    const today = new Date().toISOString().slice(0, 10);
-    const path = `data/thoughts/${today}.json`;
+  const { json = [], sha } = await readJSON(path);
 
-    const result = await readJSON(path);
-    const list = Array.isArray(result.json) ? result.json : [];
-    const sha = result.sha;
+  json.push({
+    id,
+    ts: Date.now(),
+    raw_encrypted: encrypted,
+    semantic
+  });
 
-    list.push({
-      id,
-      ts: Date.now(),
-      raw_encrypted: encrypted,
-      semantic
-    });
+  await writeJSON(path, json, sha);
 
-    await writeJSON(path, list, sha);
+  const key = `${semantic.emotion}|${semantic.domain}|${semantic.intent}`;
+  await updateIndex(key, id);
 
-    // ---------------- INDEX ----------------
-    if (semantic?.emotion && semantic?.domain && semantic?.intent) {
-      const key = `${semantic.emotion}|${semantic.domain}|${semantic.intent}`;
-      await updateIndex(key, id);
-    }
-
-    return res.json({
-      status: "ok",
-      message: "Thought stored",
-      semantic_preview: semantic
-    });
-
-  } catch (err) {
-    console.error("POST /api/thought ERROR:", err);
-    return res.status(500).json({
-      error: "Internal error",
-      detail: err.message
-    });
-  }
+  res.json({
+    status: "ok",
+    message: "Thought stored",
+    match_hint: "Someone thinks like you"
+  });
 }
