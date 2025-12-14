@@ -30,5 +30,19 @@
         "stress"
       ]
     }
+  },
+  {
+    "id": "t_mj62ul35",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765738057882,
+    "raw_encrypted": "SdvQHC2y2yMUHAIu.Dfd2bCJl0Oaf9PQeOr/X6g==.2MvCYGTWDp56EVaIu/4vNPBnPVw=",
+    "semantic": {
+      "emotion": "calm",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
   }
 ]
