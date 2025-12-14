@@ -1,53 +1,31 @@
-import { Octokit } from "@octokit/rest";
-import { decrypt } from "../_lib/encrypt.js";
-import { readJSON } from "../_lib/github.js";
+import crypto from "crypto";
 
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN
-});
+const ALGO = "aes-256-gcm";
+const KEY = Buffer.from(process.env.ENCRYPTION_KEY, "hex"); // 32 bytes
 
-const owner = process.env.GITHUB_OWNER;
-const repo = process.env.GITHUB_REPO;
-const branch = process.env.GITHUB_BRANCH;
+export function encrypt(text) {
+  const iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv(ALGO, KEY, iv);
 
-export default async function handler(req, res) {
-  const { id } = req.query;
+  let encrypted = cipher.update(text, "utf8", "base64");
+  encrypted += cipher.final("base64");
 
-  if (!id) {
-    return res.status(400).json({ error: "Missing id" });
-  }
+  const tag = cipher.getAuthTag().toString("base64");
 
-  try {
-    const listRes = await octokit.repos.getContent({
-      owner,
-      repo,
-      path: "data/thoughts",
-      ref: branch
-    });
+  return `${iv.toString("base64")}.${tag}.${encrypted}`;
+}
 
-    if (!Array.isArray(listRes.data)) {
-      return res.status(404).json({ error: "No thoughts folder" });
-    }
+export function decrypt(payload) {
+  const [ivB64, tagB64, dataB64] = payload.split(".");
 
-    for (const file of listRes.data) {
-      if (!file.name.endsWith(".json")) continue;
+  const iv = Buffer.from(ivB64, "base64");
+  const tag = Buffer.from(tagB64, "base64");
 
-      const { json } = await readJSON(`data/thoughts/${file.name}`);
-      if (!Array.isArray(json)) continue;
+  const decipher = crypto.createDecipheriv(ALGO, KEY, iv);
+  decipher.setAuthTag(tag);
 
-      const post = json.find(p => p.id === id);
-      if (!post) continue;
+  let decrypted = decipher.update(dataB64, "base64", "utf8");
+  decrypted += decipher.final("utf8");
 
-      const text = decrypt(post.raw_encrypted);
-      return res.json({ id, text });
-    }
-
-    return res.status(404).json({ error: "Post not found" });
-
-  } catch (err) {
-    return res.status(500).json({
-      error: "Decrypt failed",
-      detail: err.message
-    });
-  }
+  return decrypted;
 }
