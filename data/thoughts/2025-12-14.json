@@ -19,5 +19,19 @@
         "seriously"
       ]
     }
+  },
+  {
+    "id": "t_mj5w24e5",
+    "uid": "dh4LWKO5ABhDCX6S7k8Wp4VkxaS2",
+    "ts": 1765726652177,
+    "raw_encrypted": "8AWZ62T4EJgT8Pa9.ZNKcqNehMG/xF36qhHB97A==.fY0EloA4lWXf",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 3,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
   }
 ]
