@@ -1,0 +1,23 @@
+[
+  {
+    "id": "t_mj5uazif",
+    "ts": 1765723706502,
+    "raw_encrypted": "7EkzcVsMQ1sF/Qr2.hFNY7MBSIz+YYS60X88pfg==.o784ZcjgHJfhFf+ATzfWBFHg/Btu//ETlB97SDfvD80fOKkH93oblR3E6K5xyw==",
+    "semantic": {
+      "emotion": "hope",
+      "emotion_intensity": 7,
+      "domain": "health",
+      "intent": "achievement",
+      "themes": [
+        "self-improvement",
+        "wellbeing",
+        "commitment"
+      ],
+      "context_keywords": [
+        "health",
+        "decided",
+        "seriously"
+      ]
+    }
+  }
+]
