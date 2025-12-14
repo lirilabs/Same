@@ -1,0 +1,18 @@
+[
+  {
+    "id": "t_mj5yp4x8",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765731085162,
+    "raw_encrypted": "AjMdhEmHoj2H2OB6.uduYyK+57ydfEURXSHEQgg==.SyORSqVeiNhHKPkSIGqA3Yfc",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 5,
+      "domain": "identity",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "share"
+      ]
+    }
+  }
+]
