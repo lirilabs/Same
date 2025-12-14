@@ -14,5 +14,19 @@
         "share"
       ]
     }
+  },
+  {
+    "id": "t_mj5z01re",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765731594297,
+    "raw_encrypted": "XuugCDRBJVkqa9ID.TYo4aWiN1C0a12sPVFUPKg==.AwJ/klAT47+2xnFYE8o8Srs=",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "unknown",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
   }
 ]
