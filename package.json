@@ -1,0 +1,12 @@
+{
+  "name": "thought-db-server",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.0"
+  }
+}
