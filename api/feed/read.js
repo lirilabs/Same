@@ -1,43 +1,48 @@
-import { readJSON } from "../_lib/github.js";
+import { Octokit } from "@octokit/rest";
 import { decrypt } from "../_lib/encrypt.js";
+import { readJSON } from "../_lib/github.js";
+
+const octokit = new Octokit({
+  auth: process.env.GITHUB_TOKEN
+});
+
+const owner = process.env.GITHUB_OWNER;
+const repo = process.env.GITHUB_REPO;
+const branch = process.env.GITHUB_BRANCH;
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
-    // 1️⃣ List all files in data/thoughts
-    const filesRes = await fetch(
-      `https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/contents/data/thoughts?ref=${process.env.GITHUB_BRANCH}`,
-      {
-        headers: {
-          Authorization: `token ${process.env.GITHUB_TOKEN}`
-        }
-      }
-    );
+    // 1️⃣ List files in data/thoughts/
+    const listRes = await octokit.repos.getContent({
+      owner,
+      repo,
+      path: "data/thoughts",
+      ref: branch
+    });
 
-    const files = await filesRes.json();
-
-    if (!Array.isArray(files)) {
+    if (!Array.isArray(listRes.data)) {
       return res.json({ count: 0, items: [] });
     }
 
     const items = [];
 
-    // 2️⃣ Read each day's file
-    for (const file of files) {
+    // 2️⃣ Read each file
+    for (const file of listRes.data) {
       if (!file.name.endsWith(".json")) continue;
 
-      const dayRes = await readJSON(`data/thoughts/${file.name}`);
-      const list = Array.isArray(dayRes.json) ? dayRes.json : [];
+      const { json } = await readJSON(`data/thoughts/${file.name}`);
+      if (!Array.isArray(json)) continue;
 
-      for (const item of list) {
+      for (const entry of json) {
         try {
           items.push({
-            id: item.id,
-            text: decrypt(item.raw_encrypted),
-            semantic: item.semantic,
-            uid: item.uid,
-            ts: item.ts
+            id: entry.id,
+            text: decrypt(entry.raw_encrypted),
+            uid: entry.uid,
+            semantic: entry.semantic,
+            ts: entry.ts
           });
         } catch {
           // skip broken entries
@@ -54,7 +59,7 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    console.error("READ FEED ERROR:", err);
+    console.error("READ FEED CRASH:", err);
     return res.status(500).json({
       error: "Internal error",
       detail: err.message
