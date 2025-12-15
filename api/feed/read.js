@@ -1,5 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import { readJSON } from "../_lib/github.js";
+import { decrypt } from "../_lib/encrypt.js";
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
@@ -35,10 +36,21 @@ export default async function handler(req, res) {
       if (!Array.isArray(json)) continue;
 
       for (const entry of json) {
+        let text = null;
+
+        try {
+          text = decrypt(entry.raw_encrypted);
+        } catch (e) {
+          // corrupted or invalid encryption
+          continue;
+        }
+
+        if (!text) continue;
+
         items.push({
           id: entry.id,
-          raw_encrypted: entry.raw_encrypted, // 🔐 still encrypted
           uid: entry.uid,
+          text,               // ✅ decrypted text
           semantic: entry.semantic,
           ts: entry.ts
         });
