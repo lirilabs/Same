@@ -5,7 +5,7 @@ import { updateIndex } from "../_lib/indexer.js";
 import { updateUserIndex } from "../_lib/userIndexer.js";
 
 /* ======================================================
-   CORS – ALLOW ALL (BROWSER SAFE)
+   CORS – ALLOW ALL ORIGINS
 ====================================================== */
 function setCors(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -15,11 +15,12 @@ function setCors(res) {
 }
 
 /* ======================================================
-   DEFAULT STYLE
+   DEFAULT STYLE (INCLUDES fontColor)
 ====================================================== */
 function defaultStyle() {
   return {
-    color: "#94A3B8",
+    color: "#94A3B8",       // accent / border
+    fontColor: "#E5E7EB",   // text color (NEW)
     ratio: "4:5",
     font: "Inter",
     weight: 500,
@@ -33,7 +34,7 @@ function defaultStyle() {
 export default async function handler(req, res) {
   setCors(res);
 
-  // ---- Preflight (THIS IS CRITICAL) ----
+  // ---------- Preflight ----------
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
@@ -43,7 +44,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // ---- Parse body safely ----
+    // ---------- Safe body parsing ----------
     const body =
       typeof req.body === "string"
         ? JSON.parse(req.body)
@@ -59,10 +60,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Invalid text" });
     }
 
-    // ---- Core logic ----
+    // ---------- Core logic ----------
     const semantic = await classifyThought(text);
     const encrypted = encrypt(text);
 
+    // ✅ Merge defaults + client style (fontColor supported)
     const finalStyle = {
       ...defaultStyle(),
       ...(style || {})
