@@ -26,34 +26,35 @@ export default async function handler(req, res) {
     }
 
     const items = apiData.data.results.map(song => {
-      // 🎵 Clean song name
-      const name = song.name?.trim() || "Unknown";
+      // 🎵 Song title
+      const title = song.name?.trim() || "Unknown";
 
       // 🎤 Primary artist
       const artist =
         song.artists?.primary?.map(a => a.name).join(", ") || "Unknown Artist";
 
-      // 🖼️ Best image (500x500)
+      // 🖼️ High quality image (safe, cached CDN)
       const image =
         song.image?.find(i => i.quality === "500x500")?.url ||
         song.image?.[song.image.length - 1]?.url ||
         null;
 
-      // 🔊 Best audio (320kbps)
+      // 🎧 MID QUALITY AUDIO (160kbps preferred)
       const audio =
+        song.downloadUrl?.find(d => d.quality === "160kbps")?.url ||
+        song.downloadUrl?.find(d => d.quality === "96kbps")?.url ||
         song.downloadUrl?.find(d => d.quality === "320kbps")?.url ||
-        song.downloadUrl?.[song.downloadUrl.length - 1]?.url ||
         null;
 
       return {
         id: song.id,
-        title: name,
+        title,
         artist,
         album: song.album?.name || "",
-        duration: song.duration,
+        duration: song.duration, // seconds
         year: song.year,
         image,
-        audio,
+        audio,                 // 👈 mid quality
         language: song.language,
         explicit: song.explicitContent,
         playCount: song.playCount,
