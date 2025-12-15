@@ -74,10 +74,8 @@
       "theme": "light"
     },
     "likes": {
-      "count": 1,
-      "users": {
-        "BmAaBOs6GNbu9O1OFP2W2r2N7aI2": true
-      }
+      "count": 0,
+      "users": {}
     }
   }
 ]
