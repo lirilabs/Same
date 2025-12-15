@@ -56,5 +56,19 @@
         "ffff"
       ]
     }
+  },
+  {
+    "id": "t_mj79ex6k",
+    "uid": "dddd",
+    "ts": 1765809550543,
+    "raw_encrypted": "6FvoJ71Pq1j5atzc.e8/GX5rt3wB+/FJwedNnCA==.eQcj",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 0,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
   }
 ]
