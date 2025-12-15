@@ -138,5 +138,28 @@
         "end": 30
       }
     }
+  },
+  {
+    "id": "t_mj7ellxb",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765818260631,
+    "raw_encrypted": "3abA6Cv3NtKQoMcL.r2hAnuUbI4FnZfleM8vP8A==.0zbn/eR5",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "self",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "4:5",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
   }
 ]
