@@ -3,18 +3,14 @@ import { readJSON } from "../_lib/github.js";
 import { decrypt } from "../_lib/encrypt.js";
 
 /* ======================================================
-   CORS – ALLOW ALL ORIGINS
+   CORS
 ====================================================== */
 function setCors(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Max-Age", "86400");
 }
 
-/* ======================================================
-   GITHUB CONFIG
-====================================================== */
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
 });
@@ -23,9 +19,6 @@ const owner = process.env.GITHUB_OWNER;
 const repo = process.env.GITHUB_REPO;
 const branch = process.env.GITHUB_BRANCH;
 
-/* ======================================================
-   DEFAULT STYLE
-====================================================== */
 const DEFAULT_STYLE = {
   color: "#94A3B8",
   fontColor: "#E5E7EB",
@@ -35,22 +28,15 @@ const DEFAULT_STYLE = {
   theme: "light"
 };
 
-/* ======================================================
-   API HANDLER
-====================================================== */
 export default async function handler(req, res) {
   setCors(res);
 
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
+  if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "GET") {
     return res.status(405).json({ error: "GET only" });
   }
 
   try {
-    // ---------- List thought files ----------
     const listRes = await octokit.repos.getContent({
       owner,
       repo,
@@ -64,7 +50,6 @@ export default async function handler(req, res) {
 
     const items = [];
 
-    // ---------- Read each day file ----------
     for (const file of listRes.data) {
       if (!file.name.endsWith(".json")) continue;
 
@@ -81,14 +66,7 @@ export default async function handler(req, res) {
           continue;
         }
 
-        if (!text) continue;
-
-        // ✅ SAFE LIKE EXTRACTION
         const likesObj = entry.likes || { count: 0, users: {} };
-        const likeCount =
-          typeof likesObj.count === "number"
-            ? likesObj.count
-            : Object.keys(likesObj.users || {}).length;
 
         items.push({
           id: entry.id,
@@ -98,16 +76,20 @@ export default async function handler(req, res) {
           style: entry.style || DEFAULT_STYLE,
           ts: entry.ts,
 
-          // ❤️ LIKE DATA (NEW)
+          // ❤️ Likes
           likes: {
-            count: likeCount,
-            users: Object.keys(likesObj.users || {})
-          }
+            count:
+              typeof likesObj.count === "number"
+                ? likesObj.count
+                : Object.keys(likesObj.users || {}).length
+          },
+
+          // 🎵 Music clip (NEW)
+          music: entry.music || null
         });
       }
     }
 
-    // ---------- Sort latest first ----------
     items.sort((a, b) => b.ts - a.ts);
 
     return res.json({
