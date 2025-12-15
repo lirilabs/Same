@@ -25,7 +25,9 @@ export async function readJSON(path) {
 }
 
 export async function writeJSON(path, json, sha = null) {
-  const content = Buffer.from(JSON.stringify(json, null, 2)).toString("base64");
+  const content = Buffer.from(
+    JSON.stringify(json, null, 2)
+  ).toString("base64");
 
   await octokit.repos.createOrUpdateFileContents({
     owner,
