@@ -1,8 +1,19 @@
 import { CACHE, INDEX_TTL } from "../_lib/cache.js";
 import { readJSON } from "../_lib/github.js";
 
-export default async function handler(req, res) {
+function setCors(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Max-Age", "86400");
+}
+
+export default async function handler(req, res) {
+  setCors(res);
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
   const { emotion, domain, intent } = req.query;
   if (!emotion || !domain || !intent) {
