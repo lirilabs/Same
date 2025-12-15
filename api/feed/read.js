@@ -24,7 +24,7 @@ const repo = process.env.GITHUB_REPO;
 const branch = process.env.GITHUB_BRANCH;
 
 /* ======================================================
-   DEFAULT STYLE (BACKWARD COMPATIBLE)
+   DEFAULT STYLE
 ====================================================== */
 const DEFAULT_STYLE = {
   color: "#94A3B8",
@@ -35,14 +35,12 @@ const DEFAULT_STYLE = {
   theme: "light"
 };
 
-
 /* ======================================================
    API HANDLER
 ====================================================== */
 export default async function handler(req, res) {
   setCors(res);
 
-  // ---------- Preflight ----------
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
@@ -73,7 +71,6 @@ export default async function handler(req, res) {
       const { json } = await readJSON(`data/thoughts/${file.name}`);
       if (!Array.isArray(json)) continue;
 
-      // ---------- Process entries ----------
       for (const entry of json) {
         if (!entry?.raw_encrypted) continue;
 
@@ -81,10 +78,17 @@ export default async function handler(req, res) {
         try {
           text = decrypt(entry.raw_encrypted);
         } catch {
-          continue; // skip corrupted data
+          continue;
         }
 
         if (!text) continue;
+
+        // ✅ SAFE LIKE EXTRACTION
+        const likesObj = entry.likes || { count: 0, users: {} };
+        const likeCount =
+          typeof likesObj.count === "number"
+            ? likesObj.count
+            : Object.keys(likesObj.users || {}).length;
 
         items.push({
           id: entry.id,
@@ -92,7 +96,13 @@ export default async function handler(req, res) {
           text,
           semantic: entry.semantic || {},
           style: entry.style || DEFAULT_STYLE,
-          ts: entry.ts
+          ts: entry.ts,
+
+          // ❤️ LIKE DATA (NEW)
+          likes: {
+            count: likeCount,
+            users: Object.keys(likesObj.users || {})
+          }
         });
       }
     }
