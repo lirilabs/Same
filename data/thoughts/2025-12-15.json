@@ -66,5 +66,22 @@
         "crack"
       ]
     }
+  },
+  {
+    "id": "t_mj6wga33",
+    "uid": "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2",
+    "ts": 1765787778908,
+    "raw_encrypted": "1MK5u7Q8Gdy8fERO.0erjhuB+JoB5uVvLTUG5+A==.D2J0yGMZev/E15s=",
+    "semantic": {
+      "emotion": "calm",
+      "emotion_intensity": 3,
+      "domain": "relationships",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "hello",
+        "buddy"
+      ]
+    }
   }
 ]
