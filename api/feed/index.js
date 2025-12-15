@@ -20,5 +20,8 @@ export default async function handler(req, res) {
   const key = `${emotion}|${domain}|${intent}`;
   const ids = CACHE.index[key] || [];
 
-  return res.json({ count: ids.length, items: ids.map(id => ({ id })) });
+  return res.json({
+    count: ids.length,
+    items: ids.map(id => ({ id }))
+  });
 }
