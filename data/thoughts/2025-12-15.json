@@ -50,5 +50,21 @@
         "friends"
       ]
     }
+  },
+  {
+    "id": "t_mj6vipxm",
+    "uid": "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2",
+    "ts": 1765786213204,
+    "raw_encrypted": "Q5DatwxJssyrPbbf.5BIHMvIsQy44oUUPwaMjeQ==.TGivfTk=",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 3,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "crack"
+      ]
+    }
   }
 ]
