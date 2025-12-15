@@ -28,11 +28,13 @@ const branch = process.env.GITHUB_BRANCH;
 ====================================================== */
 const DEFAULT_STYLE = {
   color: "#94A3B8",
+  fontColor: "#E5E7EB",
   ratio: "4:5",
   font: "Inter",
   weight: 500,
   theme: "light"
 };
+
 
 /* ======================================================
    API HANDLER
