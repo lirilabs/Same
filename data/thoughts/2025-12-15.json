@@ -1,0 +1,21 @@
+[
+  {
+    "id": "t_mj6oeza1",
+    "uid": "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2",
+    "ts": 1765774281325,
+    "raw_encrypted": "Dr2fCgVjtxSPLkK6.DRoDXunNRIvoRpq/TYrgFg==.h6DF4u1tY8e1gw==",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "identity",
+      "intent": "reflection",
+      "themes": [
+        "self-identity"
+      ],
+      "context_keywords": [
+        "name",
+        "Sanajay"
+      ]
+    }
+  }
+]
