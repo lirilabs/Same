@@ -1,0 +1,16 @@
+[
+  {
+    "id": "t_mj784tgt",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765807399537,
+    "raw_encrypted": "TTquprTJK3wFY72V.zkzfhkLWz9LX+ByystC/Ug==.l217izRHgj9Z",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "identity",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
+  }
+]
