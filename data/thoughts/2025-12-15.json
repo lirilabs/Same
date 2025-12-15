@@ -34,5 +34,21 @@
         "own money"
       ]
     }
+  },
+  {
+    "id": "t_mj6vi7gd",
+    "uid": "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2",
+    "ts": 1765786189199,
+    "raw_encrypted": "sYi1sTby0Ge6s0Xe.YbPA4IG2j4BYcOcJOIgpMQ==.ICf2BUpBJOPeYaZaZvs0",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 3,
+      "domain": "relationships",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "friends"
+      ]
+    }
   }
 ]
