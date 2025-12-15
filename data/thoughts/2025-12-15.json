@@ -140,6 +140,12 @@
         "start": 3.8461538461539035,
         "end": 30.769230769230766
       }
+    },
+    "likes": {
+      "count": 1,
+      "users": {
+        "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2": true
+      }
     }
   }
 ]
