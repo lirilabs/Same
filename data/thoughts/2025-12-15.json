@@ -83,5 +83,25 @@
         "buddy"
       ]
     }
+  },
+  {
+    "id": "t_mj6z6v7a",
+    "uid": "8hnc10BUx7UgTa9vHe42IAgK0q72",
+    "ts": 1765792378559,
+    "raw_encrypted": "SR/610voOvwBQqEX.cZXjw9vtoYk8zrVjrq4gYQ==.VtOKGg==",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 2,
+      "domain": "technology",
+      "intent": "exploration",
+      "themes": [
+        "internet",
+        "web",
+        "networking"
+      ],
+      "context_keywords": [
+        "http"
+      ]
+    }
   }
 ]
