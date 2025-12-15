@@ -17,5 +17,22 @@
         "Sanajay"
       ]
     }
+  },
+  {
+    "id": "t_mj6oi72j",
+    "uid": "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2",
+    "ts": 1765774431372,
+    "raw_encrypted": "+QZ8e/kAXmo/TTuw.oi+iCmdTREX46RfXZSRHOw==.qlTmm0rfhlwuf0tW3CcFSXyLxUcACbMOVY85610R8MGmM1f+JK4SJPmpxcGy4ivevHxQqHPItdVvktILhX99",
+    "semantic": {
+      "emotion": "joy",
+      "emotion_intensity": 8,
+      "domain": "life_events",
+      "intent": "achievement",
+      "themes": [],
+      "context_keywords": [
+        "new car",
+        "own money"
+      ]
+    }
   }
 ]
