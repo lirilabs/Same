@@ -1,0 +1,25 @@
+[
+  {
+    "id": "t_mj79pcli",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765810037084,
+    "raw_encrypted": "434DZk9mWiHbyXH0.tBEOcdd9Jekklo4LIc62BA==.EmzgC+0Otg==",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "identity",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "sssssss"
+      ]
+    },
+    "style": {
+      "color": "#8b7cff",
+      "ratio": "1:1",
+      "font": "Playfair Display",
+      "weight": 500,
+      "theme": "light"
+    }
+  }
+]
