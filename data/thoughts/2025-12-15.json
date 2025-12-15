@@ -21,5 +21,29 @@
       "weight": 500,
       "theme": "light"
     }
+  },
+  {
+    "id": "t_mj7a0mls",
+    "uid": "dh4LWKO5ABhDCX6S7k8Wp4VkxaS2",
+    "ts": 1765810563284,
+    "raw_encrypted": "ds8aywvO1VgtDlv7.OCWptbHmiJegfzUr6HkzQQ==.Yqbsmg==",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "dddd"
+      ]
+    },
+    "style": {
+      "color": "#0066ff",
+      "fontColor": "#ff0000",
+      "ratio": "4:5",
+      "font": "Inter",
+      "weight": 500,
+      "theme": "light"
+    }
   }
 ]
