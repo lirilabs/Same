@@ -12,5 +12,19 @@
       "themes": [],
       "context_keywords": []
     }
+  },
+  {
+    "id": "t_mj787cqy",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765807517862,
+    "raw_encrypted": "D/jyCLlRNi8W1yn5.Ui+pcZ1Z5iQ6d7N0y1b6bA==.rXIg",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
   }
 ]
