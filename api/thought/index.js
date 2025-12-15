@@ -5,22 +5,21 @@ import { updateIndex } from "../_lib/indexer.js";
 import { updateUserIndex } from "../_lib/userIndexer.js";
 
 /* ======================================================
-   CORS – ALLOW ALL ORIGINS
+   CORS
 ====================================================== */
 function setCors(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Max-Age", "86400");
 }
 
 /* ======================================================
-   DEFAULT STYLE (INCLUDES fontColor)
+   DEFAULT STYLE
 ====================================================== */
 function defaultStyle() {
   return {
-    color: "#94A3B8",       // accent / border
-    fontColor: "#E5E7EB",   // text color (NEW)
+    color: "#94A3B8",
+    fontColor: "#E5E7EB",
     ratio: "4:5",
     font: "Inter",
     weight: 500,
@@ -34,23 +33,18 @@ function defaultStyle() {
 export default async function handler(req, res) {
   setCors(res);
 
-  // ---------- Preflight ----------
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
+  if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") {
     return res.status(405).json({ error: "POST only" });
   }
 
   try {
-    // ---------- Safe body parsing ----------
     const body =
       typeof req.body === "string"
         ? JSON.parse(req.body)
         : req.body || {};
 
-    const { uid, text, style } = body;
+    const { uid, text, style, music } = body;
 
     if (!uid || typeof uid !== "string") {
       return res.status(400).json({ error: "Invalid uid" });
@@ -60,11 +54,41 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Invalid text" });
     }
 
+    // ---------- Validate music (optional) ----------
+    let finalMusic = null;
+
+    if (music) {
+      const { song, artist, image, audio, clip } = music;
+
+      if (
+        !song ||
+        !artist ||
+        !audio ||
+        !clip ||
+        typeof clip.start !== "number" ||
+        typeof clip.end !== "number" ||
+        clip.end <= clip.start ||
+        clip.end - clip.start > 30
+      ) {
+        return res.status(400).json({ error: "Invalid music clip" });
+      }
+
+      finalMusic = {
+        song,
+        artist,
+        image: image || null,
+        audio,
+        clip: {
+          start: clip.start,
+          end: clip.end
+        }
+      };
+    }
+
     // ---------- Core logic ----------
     const semantic = await classifyThought(text);
     const encrypted = encrypt(text);
 
-    // ✅ Merge defaults + client style (fontColor supported)
     const finalStyle = {
       ...defaultStyle(),
       ...(style || {})
@@ -83,7 +107,8 @@ export default async function handler(req, res) {
       ts: Date.now(),
       raw_encrypted: encrypted,
       semantic,
-      style: finalStyle
+      style: finalStyle,
+      music: finalMusic   // 🎵 STORED HERE
     });
 
     await writeJSON(path, list, result.sha);
@@ -92,10 +117,10 @@ export default async function handler(req, res) {
     await updateIndex(key, id);
     await updateUserIndex(uid, id);
 
-    return res.status(200).json({
+    return res.json({
       status: "ok",
       id,
-      style: finalStyle
+      music: finalMusic
     });
 
   } catch (err) {
