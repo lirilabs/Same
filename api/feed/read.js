@@ -14,7 +14,6 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
-    // 1️⃣ List files in data/thoughts/
     const listRes = await octokit.repos.getContent({
       owner,
       repo,
@@ -28,7 +27,6 @@ export default async function handler(req, res) {
 
     const items = [];
 
-    // 2️⃣ Read each JSON file
     for (const file of listRes.data) {
       if (!file.name.endsWith(".json")) continue;
 
@@ -36,28 +34,26 @@ export default async function handler(req, res) {
       if (!Array.isArray(json)) continue;
 
       for (const entry of json) {
-        let text = null;
+        let decrypted;
 
         try {
-          text = decrypt(entry.raw_encrypted);
-        } catch (e) {
-          // corrupted or invalid encryption
+          decrypted = decrypt(entry.raw_encrypted);
+        } catch {
           continue;
         }
 
-        if (!text) continue;
+        if (!decrypted) continue;
 
         items.push({
           id: entry.id,
           uid: entry.uid,
-          text,               // ✅ decrypted text
+          raw_encrypted: decrypted, // ✅ SAME KEY, DECRYPTED VALUE
           semantic: entry.semantic,
           ts: entry.ts
         });
       }
     }
 
-    // 3️⃣ Sort newest first
     items.sort((a, b) => b.ts - a.ts);
 
     return res.json({
@@ -66,7 +62,6 @@ export default async function handler(req, res) {
     });
 
   } catch (err) {
-    console.error("READ FEED ERROR:", err);
     return res.status(500).json({
       error: "Internal error",
       detail: err.message
