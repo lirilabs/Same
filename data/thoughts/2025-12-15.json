@@ -1,0 +1,25 @@
+[
+  {
+    "id": "t_mj7escpp",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765818575273,
+    "raw_encrypted": "eB2qajneuDzeX8py.xn9HURPqFL2LxAiP0qtKGg==.+N7nQVA=",
+    "semantic": {
+      "emotion": "sadness",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "struggle",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "4:5",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
+  }
+]
