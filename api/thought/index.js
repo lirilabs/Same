@@ -4,6 +4,9 @@ import { readJSON, writeJSON } from "../_lib/github.js";
 import { updateIndex } from "../_lib/indexer.js";
 import { updateUserIndex } from "../_lib/userIndexer.js";
 
+/* ======================================================
+   CORS – ALLOW ALL (BROWSER SAFE)
+====================================================== */
 function setCors(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -11,9 +14,26 @@ function setCors(res) {
   res.setHeader("Access-Control-Max-Age", "86400");
 }
 
+/* ======================================================
+   DEFAULT STYLE
+====================================================== */
+function defaultStyle() {
+  return {
+    color: "#94A3B8",
+    ratio: "4:5",
+    font: "Inter",
+    weight: 500,
+    theme: "light"
+  };
+}
+
+/* ======================================================
+   API HANDLER
+====================================================== */
 export default async function handler(req, res) {
   setCors(res);
 
+  // ---- Preflight (THIS IS CRITICAL) ----
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
@@ -23,7 +43,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { uid, text, style } = req.body || {};
+    // ---- Parse body safely ----
+    const body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body)
+        : req.body || {};
+
+    const { uid, text, style } = body;
 
     if (!uid || typeof uid !== "string") {
       return res.status(400).json({ error: "Invalid uid" });
@@ -33,15 +59,12 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Invalid text" });
     }
 
+    // ---- Core logic ----
     const semantic = await classifyThought(text);
     const encrypted = encrypt(text);
 
     const finalStyle = {
-      color: "#94A3B8",
-      ratio: "4:5",
-      font: "Inter",
-      weight: 500,
-      theme: "light",
+      ...defaultStyle(),
       ...(style || {})
     };
 
@@ -67,7 +90,12 @@ export default async function handler(req, res) {
     await updateIndex(key, id);
     await updateUserIndex(uid, id);
 
-    return res.json({ status: "ok", id });
+    return res.status(200).json({
+      status: "ok",
+      id,
+      style: finalStyle
+    });
+
   } catch (err) {
     return res.status(500).json({
       error: "Internal error",
