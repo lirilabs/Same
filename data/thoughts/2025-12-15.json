@@ -161,5 +161,30 @@
       "theme": "dark"
     },
     "music": null
+  },
+  {
+    "id": "t_mj7eoqn7",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765818406702,
+    "raw_encrypted": "f4ksLnvJGcUAH+ad.FfFcN/scoG0cUkHR7KZwIA==.RwEKgw==",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "dddd"
+      ]
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "4:5",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
   }
 ]
