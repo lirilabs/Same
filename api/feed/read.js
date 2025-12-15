@@ -10,6 +10,14 @@ const owner = process.env.GITHUB_OWNER;
 const repo = process.env.GITHUB_REPO;
 const branch = process.env.GITHUB_BRANCH;
 
+const DEFAULT_STYLE = {
+  color: "#94A3B8",
+  ratio: "4:5",
+  font: "Inter",
+  weight: 500,
+  theme: "light"
+};
+
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -34,21 +42,21 @@ export default async function handler(req, res) {
       if (!Array.isArray(json)) continue;
 
       for (const entry of json) {
-        let decrypted;
-
+        let text;
         try {
-          decrypted = decrypt(entry.raw_encrypted);
+          text = decrypt(entry.raw_encrypted);
         } catch {
           continue;
         }
 
-        if (!decrypted) continue;
+        if (!text) continue;
 
         items.push({
           id: entry.id,
           uid: entry.uid,
-          raw_encrypted: decrypted, // ✅ SAME KEY, DECRYPTED VALUE
+          text,
           semantic: entry.semantic,
+          style: entry.style || DEFAULT_STYLE,
           ts: entry.ts
         });
       }
