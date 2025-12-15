@@ -26,5 +26,19 @@
       "themes": [],
       "context_keywords": []
     }
+  },
+  {
+    "id": "t_mj78ljnk",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765808180009,
+    "raw_encrypted": "BmSmISZoaK8oWBQS.i+0DGgjidJcfoWQzZQq/Sw==.9ULK/n/2OOytAB3Z",
+    "semantic": {
+      "emotion": "sadness",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    }
   }
 ]
