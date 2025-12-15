@@ -70,5 +70,26 @@
       "themes": [],
       "context_keywords": []
     }
+  },
+  {
+    "id": "t_mj79lsm6",
+    "uid": "fffff",
+    "ts": 1765809871243,
+    "raw_encrypted": "o/T12WpJJ4hkR/0P.V6DiDE/tn3efo/6JAF5FTA==.hERC",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#0066ff",
+      "ratio": "4:5",
+      "font": "Inter",
+      "weight": 500,
+      "theme": "light"
+    }
   }
 ]
