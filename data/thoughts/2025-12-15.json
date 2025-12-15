@@ -44,6 +44,12 @@
       "font": "Inter",
       "weight": 500,
       "theme": "light"
+    },
+    "likes": {
+      "count": 1,
+      "users": {
+        "uid_aojbbzl4": true
+      }
     }
   },
   {
