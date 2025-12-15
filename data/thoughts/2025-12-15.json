@@ -50,10 +50,9 @@
       "theme": "light"
     },
     "likes": {
-      "count": 2,
+      "count": 1,
       "users": {
-        "uid_aojbbzl4": true,
-        "BmAaBOs6GNbu9O1OFP2W2r2N7aI2": true
+        "uid_aojbbzl4": true
       }
     }
   },
