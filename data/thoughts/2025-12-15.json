@@ -45,5 +45,27 @@
       "weight": 500,
       "theme": "light"
     }
+  },
+  {
+    "id": "t_mj7ahpov",
+    "uid": "8hnc10BUx7UgTa9vHe42IAgK0q72",
+    "ts": 1765811360406,
+    "raw_encrypted": "5+FLvB0HiBYyg8oO.IzjZdcJRBAT6P79U3UM0sA==.8FJ1XJun7A==",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#0066ff",
+      "fontColor": "#ffffff",
+      "ratio": "4:5",
+      "font": "Inter",
+      "weight": 500,
+      "theme": "light"
+    }
   }
 ]
