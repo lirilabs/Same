@@ -1,38 +1,40 @@
 export async function classifyThought(text) {
   const prompt = `
-You are an AI that classifies short human thoughts.
+You classify short human thoughts.
 
-IMPORTANT RULES:
-- You MUST choose the MOST SPECIFIC domain.
-- DO NOT default to "life_events" unless no other domain fits.
-- Infer the domain from meaning, not keywords.
-- If multiple domains fit, choose the strongest one.
-- Create context keywords from the text itself.
+RULES:
+- You MAY return multiple domains (max 3).
+- Choose domains based on meaning, not keywords.
+- DO NOT default to "life_events".
+- Always choose the most specific domains.
+- Include "fashion" when clothing/style is involved.
+- Include "shopping" when purchase is involved.
 
-Return ONLY valid JSON.
-NO explanations.
+Return ONLY valid JSON. No explanations.
 
 Schema:
 {
   "emotion": "joy|sadness|anxiety|anger|calm|loneliness|hope|curiosity",
   "emotion_intensity": number,
-  "domain": "family|relationships|career|education|health|sports|money|creativity|identity|life_events",
+  "domains": [],
   "intent": "achievement|milestone|struggle|reflection|anticipation|relief|loss|gratitude|decision",
   "themes": [],
   "context_keywords": []
 }
 
-Domain selection guide (STRICT):
-- family → parents, kids, home, relatives
-- relationships → love, breakup, partner, dating, marriage
-- career → job, work, office, business, promotion
-- education → study, exam, college, school, learning
-- health → illness, fitness, mental health, recovery
-- sports → match, game, win, team, practice
-- money → salary, debt, savings, expenses
-- creativity → writing, music, art, ideas, building
-- identity → self, purpose, confidence, who I am
-- life_events → ONLY if none of the above apply
+Available domains:
+- family
+- relationships
+- career
+- education
+- health
+- sports
+- money
+- creativity
+- identity
+- fashion
+- shopping
+- life_events (ONLY if nothing else fits)
 
 Thought:
 "${text}"
@@ -43,7 +45,6 @@ Thought:
   );
 
   const raw = await res.text();
-
   const start = raw.indexOf("{");
   const end = raw.lastIndexOf("}");
 
