@@ -77,12 +77,15 @@ export default async function handler(req, res) {
           ts: entry.ts,
 
           // ❤️ Likes
-          likes: {
-            count:
-              typeof likesObj.count === "number"
-                ? likesObj.count
-                : Object.keys(likesObj.users || {}).length
-          },
+         likes: {
+  count:
+    typeof likesObj.count === "number"
+      ? likesObj.count
+      : Object.keys(likesObj.users || {}).length,
+
+  users: Object.keys(likesObj.users || {})
+}
+
 
           // 🎵 Music clip (NEW)
           music: entry.music || null
