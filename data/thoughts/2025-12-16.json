@@ -140,5 +140,34 @@
       "theme": "dark"
     },
     "music": null
+  },
+  {
+    "id": "t_mj85z5mn",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765864242327,
+    "raw_encrypted": "BigpY4CeTyh/zX0I.H+tFJy6eqZq7Qlg26b9KcA==.DjhuFKXVpAR7M3bNbc9IhQMPAhr2lj4ImrXcwRFtVjdfSsyQUPI=",
+    "semantic": {
+      "emotion": "joy",
+      "emotion_intensity": 8,
+      "domains": [
+        "fashion",
+        "shopping"
+      ],
+      "intent": "reflection",
+      "themes": [
+        "style",
+        "self-expression"
+      ],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "4:5",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
   }
 ]
