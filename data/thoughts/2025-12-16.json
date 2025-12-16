@@ -265,5 +265,39 @@
         "BmAaBOs6GNbu9O1OFP2W2r2N7aI2": true
       }
     }
+  },
+  {
+    "id": "t_mj8dydhw",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765877642770,
+    "raw_encrypted": "VUIYwAdNFX8sQ5OX.5LNLpclPeRZB0LMidf80GQ==.XB750cM=",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domains": [
+        "creativity"
+      ],
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#ff0000",
+      "fontColor": "#ffa500",
+      "ratio": "4:5",
+      "font": "Bebas Neue",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": {
+      "song": "Shapiro 2019",
+      "artist": "John Vince",
+      "image": "https://c.saavncdn.com/503/Shapiro-2019-English-2018-20181016225411-500x500.jpg",
+      "audio": "https://aac.saavncdn.com/503/6247351a889110629a6f9d4c263aa33a_160.mp4",
+      "clip": {
+        "start": 26.30769230769231,
+        "end": 56.30769230769231
+      }
+    }
   }
 ]
