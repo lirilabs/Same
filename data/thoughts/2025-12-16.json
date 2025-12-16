@@ -358,5 +358,28 @@
       "theme": "dark"
     },
     "music": null
+  },
+  {
+    "id": "t_mj8f019q",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765879399860,
+    "raw_encrypted": "OmCkJJaUw3yiAG51.R0nVjkL1oJBxnH1gHfIqjA==.V5o9jcbzuTA=",
+    "semantic": {
+      "emotion": null,
+      "emotion_intensity": 0,
+      "domains": [],
+      "intent": null,
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "9:16",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
   }
 ]
