@@ -388,8 +388,10 @@
     },
     "music": null,
     "likes": {
-      "count": 0,
-      "users": {}
+      "count": 1,
+      "users": {
+        "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2": true
+      }
     }
   },
   {
