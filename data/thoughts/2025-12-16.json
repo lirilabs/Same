@@ -1,0 +1,25 @@
+[
+  {
+    "id": "t_mj816gr5",
+    "uid": "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2",
+    "ts": 1765856185239,
+    "raw_encrypted": "LImr6xSN7Td9xP1Z.fT6U9KlHd+nO0RiAloc9KA==.QqXW",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "9:16",
+      "font": "Roboto",
+      "weight": 700,
+      "theme": "dark"
+    },
+    "music": null
+  }
+]
