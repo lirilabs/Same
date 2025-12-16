@@ -333,5 +333,30 @@
         "end": 50
       }
     }
+  },
+  {
+    "id": "t_mj8elmg6",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765878727457,
+    "raw_encrypted": "TbrGaLZ0lvzH82RE.rdHd1MQFsjypvqCV/wliIw==.ZLPv3i/b",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domains": [
+        "fashion"
+      ],
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "9:16",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
   }
 ]
