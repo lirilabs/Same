@@ -21,5 +21,30 @@
       "theme": "dark"
     },
     "music": null
+  },
+  {
+    "id": "t_mj81720e",
+    "uid": "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2",
+    "ts": 1765856212777,
+    "raw_encrypted": "dN6H7D7KCB66Eszl.q9Vow+dsKSwKEPGgWreLnw==.b6cvZ3SEhCLS/qv5PA==",
+    "semantic": {
+      "emotion": "joy",
+      "emotion_intensity": 3,
+      "domain": "life_events",
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": [
+        "laughter"
+      ]
+    },
+    "style": {
+      "color": "#800080",
+      "fontColor": "#ffffff",
+      "ratio": "4:5",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
   }
 ]
