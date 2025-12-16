@@ -338,6 +338,12 @@
         "start": 20,
         "end": 50
       }
+    },
+    "likes": {
+      "count": 1,
+      "users": {
+        "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2": true
+      }
     }
   },
   {
