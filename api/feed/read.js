@@ -11,6 +11,9 @@ function setCors(res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 }
 
+/* ======================================================
+   GITHUB CONFIG
+====================================================== */
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
 });
@@ -19,6 +22,9 @@ const owner = process.env.GITHUB_OWNER;
 const repo = process.env.GITHUB_REPO;
 const branch = process.env.GITHUB_BRANCH;
 
+/* ======================================================
+   DEFAULT STYLE
+====================================================== */
 const DEFAULT_STYLE = {
   color: "#94A3B8",
   fontColor: "#E5E7EB",
@@ -28,15 +34,22 @@ const DEFAULT_STYLE = {
   theme: "light"
 };
 
+/* ======================================================
+   API HANDLER
+====================================================== */
 export default async function handler(req, res) {
   setCors(res);
 
-  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   if (req.method !== "GET") {
     return res.status(405).json({ error: "GET only" });
   }
 
   try {
+    /* ---------- List all day files ---------- */
     const listRes = await octokit.repos.getContent({
       owner,
       repo,
@@ -50,6 +63,7 @@ export default async function handler(req, res) {
 
     const items = [];
 
+    /* ---------- Read each JSON file ---------- */
     for (const file of listRes.data) {
       if (!file.name.endsWith(".json")) continue;
 
@@ -63,40 +77,42 @@ export default async function handler(req, res) {
         try {
           text = decrypt(entry.raw_encrypted);
         } catch {
-          continue;
+          continue; // skip corrupted entry
         }
 
-       const likesObj = entry.likes || { count: 0, users: {} };
+        if (!text) continue;
 
-items.push({
-  id: entry.id,
-  uid: entry.uid,
-  text,
-  semantic: entry.semantic || {},
-  style: entry.style || DEFAULT_STYLE,
-  ts: entry.ts,
+        /* ---------- Likes handling ---------- */
+        const likesObj =
+          entry.likes && typeof entry.likes === "object"
+            ? entry.likes
+            : { users: {} };
 
-  // ❤️ Likes (COUNT + UID LIST)
-  likes: {
-    count:
-      typeof likesObj.count === "number"
-        ? likesObj.count
-        : Object.keys(likesObj.users || {}).length,
-    users: Object.keys(likesObj.users || {})
-  },
+        const likeUsers = Object.keys(likesObj.users || {});
+        const likeCount = likeUsers.length;
 
-  // 🎵 Music
-  music: entry.music || null
-});
+        /* ---------- Push final item ---------- */
+        items.push({
+          id: entry.id,
+          uid: entry.uid,
+          text,
+          semantic: entry.semantic || {},
+          style: entry.style || DEFAULT_STYLE,
+          ts: entry.ts,
 
+          // ❤️ Likes (COUNT + UID LIST)
+          likes: {
+            count: likeCount,
+            users: likeUsers
+          },
 
-
-          // 🎵 Music clip (NEW)
+          // 🎵 Music clip (optional)
           music: entry.music || null
         });
       }
     }
 
+    /* ---------- Sort newest first ---------- */
     items.sort((a, b) => b.ts - a.ts);
 
     return res.json({
@@ -105,6 +121,7 @@ items.push({
     });
 
   } catch (err) {
+    console.error("FEED READ ERROR:", err);
     return res.status(500).json({
       error: "Internal error",
       detail: err.message
