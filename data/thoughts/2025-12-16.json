@@ -386,7 +386,13 @@
       "weight": 500,
       "theme": "dark"
     },
-    "music": null
+    "music": null,
+    "likes": {
+      "count": 1,
+      "users": {
+        "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2": true
+      }
+    }
   },
   {
     "id": "t_mj8n5o78",
