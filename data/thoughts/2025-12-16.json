@@ -388,5 +388,39 @@
       "theme": "dark"
     },
     "music": null
+  },
+  {
+    "id": "t_mj8n5o78",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1765893099789,
+    "raw_encrypted": "AUsv55kuHJDkR7df.dI6jTtsREumaBzOr4f8j3Q==.Wj53yvrSjlo=",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domains": [
+        "creativity"
+      ],
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#0000ff",
+      "fontColor": "#ffa500",
+      "ratio": "4:5",
+      "font": "Open Sans",
+      "weight": 700,
+      "theme": "dark"
+    },
+    "music": {
+      "song": "Believer",
+      "artist": "Imagine Dragons",
+      "image": "https://c.saavncdn.com/248/Evolve-English-2017-20180716230950-500x500.jpg",
+      "audio": "https://aac.saavncdn.com/248/a6b1b78b396245f712abda8f1daefee0_160.mp4",
+      "clip": {
+        "start": 174,
+        "end": 204
+      }
+    }
   }
 ]
