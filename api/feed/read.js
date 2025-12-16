@@ -66,25 +66,29 @@ export default async function handler(req, res) {
           continue;
         }
 
-        const likesObj = entry.likes || { count: 0, users: {} };
+       const likesObj = entry.likes || { count: 0, users: {} };
 
-        items.push({
-          id: entry.id,
-          uid: entry.uid,
-          text,
-          semantic: entry.semantic || {},
-          style: entry.style || DEFAULT_STYLE,
-          ts: entry.ts,
+items.push({
+  id: entry.id,
+  uid: entry.uid,
+  text,
+  semantic: entry.semantic || {},
+  style: entry.style || DEFAULT_STYLE,
+  ts: entry.ts,
 
-          // ❤️ Likes
-         likes: {
-  count:
-    typeof likesObj.count === "number"
-      ? likesObj.count
-      : Object.keys(likesObj.users || {}).length,
+  // ❤️ Likes (COUNT + UID LIST)
+  likes: {
+    count:
+      typeof likesObj.count === "number"
+        ? likesObj.count
+        : Object.keys(likesObj.users || {}).length,
+    users: Object.keys(likesObj.users || {})
+  },
 
-  users: Object.keys(likesObj.users || {})
-}
+  // 🎵 Music
+  music: entry.music || null
+});
+
 
 
           // 🎵 Music clip (NEW)
