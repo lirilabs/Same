@@ -422,10 +422,8 @@
       }
     },
     "likes": {
-      "count": 1,
-      "users": {
-        "UCRD3c6V2aXq7Ztj2aRYzIxr4Ue2": true
-      }
+      "count": 0,
+      "users": {}
     }
   }
 ]
