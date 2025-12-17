@@ -1,0 +1,40 @@
+[
+  {
+    "id": "t_mj9fwxvt",
+    "uid": "iOnRs5Fu8zVABq7teAXVSupNcN13",
+    "ts": 1765941401290,
+    "raw_encrypted": "fSFVBJO8qAbKg36H.2fky5XbN74cWIn8DlNWN6g==.nm3+M2YMM3wF+/PDywjXCfxs8F/pM+4EqpjV4wL0M3bk/5N0+tjeS3ZtuJ8hS/sU6plz0vk9zfAtoW3G860+k4++8NhUI/5jRxJe0WwCrV119Srs5jIRH3s=",
+    "semantic": {
+      "emotion": "hope",
+      "emotion_intensity": 6,
+      "domains": [
+        "career",
+        "creativity"
+      ],
+      "intent": "achievement",
+      "themes": [
+        "productivity",
+        "perseverance"
+      ],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#ffff00",
+      "fontColor": "#ff69b4",
+      "ratio": "9:16",
+      "font": "Lato",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": {
+      "song": "Arcade",
+      "artist": "Duncan Laurence",
+      "image": "https://c.saavncdn.com/273/Small-Town-Boy-English-2020-20201127135243-500x500.jpg",
+      "audio": "https://aac.saavncdn.com/273/bdbae452deee99ac1ebd28ea303d7ada_160.mp4",
+      "clip": {
+        "start": 53.41666666666667,
+        "end": 83.41666666666667
+      }
+    }
+  }
+]
