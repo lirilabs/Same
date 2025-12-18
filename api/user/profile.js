@@ -1,4 +1,5 @@
 import admin from "firebase-admin";
+import { readJSON } from "../_lib/github.js";
 
 export default async function handler(req, res) {
   // ---------- CORS ----------
@@ -34,13 +35,18 @@ export default async function handler(req, res) {
     }
 
     if (!uid || typeof uid !== "string") {
-      return res.status(400).json({
-        error: "Invalid or missing uid"
-      });
+      return res.status(400).json({ error: "Invalid or missing uid" });
     }
 
-    // ---------- FETCH USER ----------
+    // ---------- FETCH USER PROFILE ----------
     const user = await admin.auth().getUser(uid);
+
+    // ---------- FETCH USER POSTS ----------
+    const indexPath = "data/indexes/user-index.json";
+    const indexResult = await readJSON(indexPath);
+
+    const userIndex = indexResult.json || {};
+    const posts = Array.isArray(userIndex[uid]) ? userIndex[uid] : [];
 
     // ---------- RESPONSE ----------
     return res.status(200).json({
@@ -49,13 +55,18 @@ export default async function handler(req, res) {
       photo: user.photoURL || null,
       email: user.email || null,
       providers: user.providerData.map(p => p.providerId),
+
+      posts: {
+        count: posts.length,
+        ids: posts
+      }
     });
 
   } catch (err) {
-    console.error("Firebase error:", err.message);
+    console.error("API error:", err.message);
 
     return res.status(500).json({
-      error: "Failed to fetch user",
+      error: "Failed to fetch user data",
       detail: err.message
     });
   }
