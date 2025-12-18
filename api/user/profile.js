@@ -7,9 +7,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
 
   try {
     // ---------- INIT FIREBASE ADMIN ----------
@@ -24,49 +22,73 @@ export default async function handler(req, res) {
     }
 
     // ---------- GET UID ----------
-    let uid = null;
-
-    if (req.method === "GET") {
-      uid = req.query.uid;
-    }
-
-    if (req.method === "POST") {
-      uid = req.body?.uid;
-    }
+    const uid =
+      req.method === "GET" ? req.query.uid : req.body?.uid;
 
     if (!uid || typeof uid !== "string") {
       return res.status(400).json({ error: "Invalid or missing uid" });
     }
 
-    // ---------- FETCH USER PROFILE ----------
+    // ---------- USER PROFILE ----------
     const user = await admin.auth().getUser(uid);
 
-    // ---------- FETCH USER POSTS ----------
-    const indexPath = "data/indexes/user-index.json";
-    const indexResult = await readJSON(indexPath);
+    // ---------- USER POST IDS ----------
+    const userIndexRes = await readJSON("data/indexes/user-index.json");
+    const userIndex = userIndexRes.json || {};
+    const postIds = Array.isArray(userIndex[uid]) ? userIndex[uid] : [];
 
-    const userIndex = indexResult.json || {};
-    const posts = Array.isArray(userIndex[uid]) ? userIndex[uid] : [];
+    // ---------- LOAD THOUGHT INDEX ----------
+    const thoughtIndexRes = await readJSON("data/indexes/thought-index.json");
+    const thoughtIndex = thoughtIndexRes.json || {};
+
+    let totalLikes = 0;
+    const postDetails = [];
+
+    // ---------- LOOP THROUGH POSTS ----------
+    for (const postId of postIds) {
+      const fileName = thoughtIndex[postId];
+      if (!fileName) continue;
+
+      const dayRes = await readJSON(`data/thoughts/${fileName}`);
+      const list = Array.isArray(dayRes.json) ? dayRes.json : [];
+
+      const post = list.find(p => p.id === postId);
+      if (!post) continue;
+
+      const likeCount = post.likes?.count || 0;
+      totalLikes += likeCount;
+
+      postDetails.push({
+        id: post.id,
+        ts: post.ts,
+        likes: likeCount,
+        hasMusic: !!post.music,
+        emotion: post.semantic?.emotion || null,
+        intent: post.semantic?.intent || null,
+        domain: post.semantic?.domain || null,
+      });
+    }
 
     // ---------- RESPONSE ----------
     return res.status(200).json({
-      uid: user.uid,
-      name: user.displayName || null,
-      photo: user.photoURL || null,
-      email: user.email || null,
-      providers: user.providerData.map(p => p.providerId),
-
+      user: {
+        uid: user.uid,
+        name: user.displayName || null,
+        photo: user.photoURL || null,
+        email: user.email || null,
+        providers: user.providerData.map(p => p.providerId),
+      },
       posts: {
-        count: posts.length,
-        ids: posts
+        count: postIds.length,
+        totalLikes,
+        details: postDetails
       }
     });
 
   } catch (err) {
     console.error("API error:", err.message);
-
     return res.status(500).json({
-      error: "Failed to fetch user data",
+      error: "Failed to fetch user analytics",
       detail: err.message
     });
   }
