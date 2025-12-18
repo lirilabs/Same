@@ -32,41 +32,19 @@ export default async function handler(req, res) {
     // ---------- USER PROFILE ----------
     const user = await admin.auth().getUser(uid);
 
-    // ---------- USER POST IDS ----------
-    const userIndexRes = await readJSON("data/indexes/user-index.json");
-    const userIndex = userIndexRes.json || {};
-    const postIds = Array.isArray(userIndex[uid]) ? userIndex[uid] : [];
+    // ---------- LOAD THOUGHTS DATASET (DIRECT) ----------
+    const thoughtsRes = await readJSON("data/thoughts/2025-12-15.json");
+    const allThoughts = Array.isArray(thoughtsRes.json)
+      ? thoughtsRes.json
+      : [];
 
-    // ---------- LOAD THOUGHT INDEX ----------
-    const thoughtIndexRes = await readJSON("data/indexes/thought-index.json");
-    const thoughtIndex = thoughtIndexRes.json || {};
+    // ---------- FILTER USER THOUGHTS ----------
+    const userThoughts = allThoughts.filter(t => t.uid === uid);
 
+    // ---------- CALCULATE TOTAL LIKES ----------
     let totalLikes = 0;
-    const postDetails = [];
-
-    // ---------- LOOP THROUGH POSTS ----------
-    for (const postId of postIds) {
-      const fileName = thoughtIndex[postId];
-      if (!fileName) continue;
-
-      const dayRes = await readJSON(`data/thoughts/${fileName}`);
-      const list = Array.isArray(dayRes.json) ? dayRes.json : [];
-
-      const post = list.find(p => p.id === postId);
-      if (!post) continue;
-
-      const likeCount = post.likes?.count || 0;
-      totalLikes += likeCount;
-
-      postDetails.push({
-        id: post.id,
-        ts: post.ts,
-        likes: likeCount,
-        hasMusic: !!post.music,
-        emotion: post.semantic?.emotion || null,
-        intent: post.semantic?.intent || null,
-        domain: post.semantic?.domain || null,
-      });
+    for (const t of userThoughts) {
+      totalLikes += t.likes?.count || 0;
     }
 
     // ---------- RESPONSE ----------
@@ -79,16 +57,16 @@ export default async function handler(req, res) {
         providers: user.providerData.map(p => p.providerId),
       },
       posts: {
-        count: postIds.length,
+        count: userThoughts.length,
         totalLikes,
-        details: postDetails
+        details: userThoughts   // ✅ FULL DATASET HERE
       }
     });
 
   } catch (err) {
     console.error("API error:", err.message);
     return res.status(500).json({
-      error: "Failed to fetch user analytics",
+      error: "Failed to fetch profile thoughts",
       detail: err.message
     });
   }
