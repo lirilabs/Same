@@ -118,5 +118,30 @@
         "end": 30
       }
     }
+  },
+  {
+    "id": "t_mjbo2a12",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1766076019600,
+    "raw_encrypted": "NrRn9ke5rlxNIQYU.aZuw/+a8YtOF6Q8KkyI8zQ==.W5IjjRmwJw==",
+    "semantic": {
+      "emotion": "sadness",
+      "emotion_intensity": 3,
+      "domains": [
+        "relationships"
+      ],
+      "intent": "loss",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "9:16",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": null
   }
 ]
