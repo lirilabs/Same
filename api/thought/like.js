@@ -1,102 +1,72 @@
 import { Octokit } from "@octokit/rest";
-import { readJSON, writeJSON } from "../../_lib/github.js";
+import { readJSON, writeJSON } from "../_lib/github.js";
 
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN
 });
 
-function setCors(res) {
+const owner = process.env.GITHUB_OWNER;
+const repo = process.env.GITHUB_REPO;
+const branch = process.env.GITHUB_BRANCH;
+
+export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-}
-
-export default async function handler(req, res) {
-  setCors(res);
 
   if (req.method === "OPTIONS") return res.status(200).end();
-  if (req.method !== "POST") {
+  if (req.method !== "POST")
     return res.status(405).json({ error: "POST only" });
-  }
 
   try {
-    // ---------- SAFE BODY PARSE ----------
-    let body = req.body;
-    if (typeof body === "string") body = JSON.parse(body);
+    const { thoughtId, uid } = req.body || {};
 
-    const { thoughtId, uid } = body || {};
     if (!thoughtId || !uid) {
       return res.status(400).json({ error: "Missing thoughtId or uid" });
     }
 
-    // ---------- LIST DAILY FILES ----------
-    const files = await octokit.repos.getContent({
-      owner: process.env.GITHUB_OWNER,
-      repo: process.env.GITHUB_REPO,
-      path: "data/thoughts",
-      ref: process.env.GITHUB_BRANCH
-    });
+    // 1️⃣ Find the thought by scanning daily files
+    const today = new Date().toISOString().slice(0, 10);
+    const path = `data/thoughts/${today}.json`;
 
-    let found = null;
+    const result = await readJSON(path);
+    const list = Array.isArray(result.json) ? result.json : [];
 
-    // ---------- SEARCH ALL DAILY FILES ----------
-    for (const file of files.data) {
-      if (!file.name.endsWith(".json")) continue;
-
-      const resJSON = await readJSON(`data/thoughts/${file.name}`);
-      const list = Array.isArray(resJSON.json) ? resJSON.json : [];
-
-      const idx = list.findIndex(t => t.id === thoughtId);
-      if (idx !== -1) {
-        found = {
-          path: `data/thoughts/${file.name}`,
-          list,
-          idx,
-          sha: resJSON.sha
-        };
-        break;
-      }
-    }
-
-    if (!found) {
+    const idx = list.findIndex(t => t.id === thoughtId);
+    if (idx === -1) {
       return res.status(404).json({ error: "Thought not found" });
     }
 
-    // ---------- TOGGLE LIKE ----------
-    const thought = found.list[found.idx];
+    const thought = list[idx];
 
+    // 2️⃣ Init likes
     if (!thought.likes) {
       thought.likes = { count: 0, users: {} };
     }
-    if (!thought.likes.users) {
-      thought.likes.users = {};
-    }
 
-    let liked;
+    // 3️⃣ Toggle like
     if (thought.likes.users[uid]) {
+      // UNLIKE
       delete thought.likes.users[uid];
-      thought.likes.count = Math.max(0, thought.likes.count - 1);
-      liked = false;
+      thought.likes.count--;
     } else {
+      // LIKE
       thought.likes.users[uid] = true;
       thought.likes.count++;
-      liked = true;
     }
 
-    found.list[found.idx] = thought;
+    list[idx] = thought;
 
-    // ---------- SAVE BACK ----------
-    await writeJSON(found.path, found.list, found.sha);
+    // 4️⃣ Save back
+    await writeJSON(path, list, result.sha);
 
     return res.json({
       status: "ok",
-      liked,
-      count: thought.likes.count,
-      file: found.path
+      liked: !!thought.likes.users[uid],
+      count: thought.likes.count
     });
 
   } catch (err) {
-    console.error("LIKE API ERROR:", err.message);
     return res.status(500).json({
       error: "Internal error",
       detail: err.message
