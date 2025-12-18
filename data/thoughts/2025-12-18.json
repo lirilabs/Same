@@ -1,0 +1,36 @@
+[
+  {
+    "id": "t_mjbaiwsc",
+    "uid": "iOnRs5Fu8zVABq7teAXVSupNcN13",
+    "ts": 1766053280966,
+    "raw_encrypted": "d5DvaVZMQFOPH1lH.DRpk/YTmlKaX/nWoiiUDag==.CNkAJRFf67ABAI3X",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 3,
+      "domains": [
+        "identity"
+      ],
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#ff69b4",
+      "fontColor": "#800080",
+      "ratio": "9:16",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": {
+      "song": "Hello",
+      "artist": "Armaan Malik",
+      "image": "https://c.saavncdn.com/933/Hello-Telugu-2017-20171210-500x500.jpg",
+      "audio": "https://aac.saavncdn.com/933/22edee237ad0d81cde639319e36c00b3_160.mp4",
+      "clip": {
+        "start": 53.89629629629629,
+        "end": 74.5037037037037
+      }
+    }
+  }
+]
