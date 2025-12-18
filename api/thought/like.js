@@ -15,13 +15,22 @@ function setCors(res) {
 export default async function handler(req, res) {
   setCors(res);
 
-  if (req.method === "OPTIONS") return res.status(200).end();
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "POST only" });
   }
 
   try {
-    const { thoughtId, uid } = req.body || {};
+    // ---------- INPUT ----------
+    const body =
+      typeof req.body === "string"
+        ? JSON.parse(req.body)
+        : req.body || {};
+
+    const { thoughtId, uid } = body;
 
     if (!thoughtId || !uid) {
       return res.status(400).json({
@@ -29,9 +38,7 @@ export default async function handler(req, res) {
       });
     }
 
-    /* ===============================
-       1️⃣ READ THOUGHT INDEX
-    =============================== */
+    // ---------- READ THOUGHT INDEX ----------
     const indexPath = "data/indexes/thought-index.json";
     const indexRes = await readJSON(indexPath);
     const index = indexRes.json || {};
@@ -43,9 +50,7 @@ export default async function handler(req, res) {
       });
     }
 
-    /* ===============================
-       2️⃣ READ THOUGHT FILE
-    =============================== */
+    // ---------- READ THOUGHT FILE ----------
     const thoughtPath = `data/thoughts/${fileName}`;
     const result = await readJSON(thoughtPath);
     const list = Array.isArray(result.json) ? result.json : [];
@@ -59,9 +64,7 @@ export default async function handler(req, res) {
 
     const thought = list[idx];
 
-    /* ===============================
-       3️⃣ INIT LIKES (BACKWARD SAFE)
-    =============================== */
+    // ---------- INIT LIKES ----------
     if (!thought.likes || typeof thought.likes !== "object") {
       thought.likes = { count: 0, users: {} };
     }
@@ -69,9 +72,7 @@ export default async function handler(req, res) {
       thought.likes.users = {};
     }
 
-    /* ===============================
-       4️⃣ TOGGLE LIKE
-    =============================== */
+    // ---------- TOGGLE LIKE ----------
     let liked;
 
     if (thought.likes.users[uid]) {
@@ -86,16 +87,14 @@ export default async function handler(req, res) {
 
     list[idx] = thought;
 
-    /* ===============================
-       5️⃣ SAVE BACK
-    =============================== */
+    // ---------- SAVE ----------
     await writeJSON(thoughtPath, list, result.sha);
 
     return res.json({
       status: "ok",
+      thoughtId,
       liked,
-      count: thought.likes.count,
-      file: fileName
+      count: thought.likes.count
     });
 
   } catch (err) {
