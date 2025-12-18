@@ -69,5 +69,48 @@
         "end": 55.88113117870723
       }
     }
+  },
+  {
+    "id": "t_mjbm5ni8",
+    "uid": "BmAaBOs6GNbu9O1OFP2W2r2N7aI2",
+    "ts": 1766072817800,
+    "raw_encrypted": "UoxOsWYEIpdzFkfE.T6Yk6FabD8R3AvIG0Tnmow==.EA91pieiujbZQjO660uPTZbJMI7ziG8gmA9k+GA3w5igkgy+8LUV9SN0eM39R4Qtk8jwIbj6G+D7KockTA/yig+7jBqvZkInzeeGVZnUX/0sQ/ZpJT3/7X8JAdSrfdrytBxpZtvFABk98W0yKFWMyp/fKVoWpIxKM3Uu3UJFP93rNTIb2LWr5cxOawwgJ2XY1vSA9FrRaBoYHqS1anAKfjwtFdCBboHPC8bPgZ9fk/yO+iLUe6GLqBPT/AyPPb+HT9czmQ==",
+    "semantic": {
+      "emotion": "hope",
+      "emotion_intensity": 7,
+      "domains": [
+        "career",
+        "personal_development"
+      ],
+      "intent": "achievement",
+      "themes": [
+        "perseverance",
+        "growth",
+        "motivation"
+      ],
+      "context_keywords": [
+        "progress",
+        "consistency",
+        "long-term success"
+      ]
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "9:16",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": {
+      "song": "Oorum Blood",
+      "artist": "Sai Abhyankkar, Paal Dabba, bebhumika, Deepthi Suresh",
+      "image": "https://c.saavncdn.com/880/Dude-Original-Motion-Picture-Soundtrack-Tamil-2025-20251026215849-500x500.jpg",
+      "audio": "https://aac.saavncdn.com/880/42578840a93b3a69fbba890433ac5805_160.mp4",
+      "clip": {
+        "start": 0,
+        "end": 30
+      }
+    }
   }
 ]
