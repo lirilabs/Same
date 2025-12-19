@@ -1,0 +1,36 @@
+[
+  {
+    "id": "t_mjcn04dy",
+    "uid": "8hnc10BUx7UgTa9vHe42IAgK0q72",
+    "ts": 1766134705522,
+    "raw_encrypted": "PzosEemgHlOS44/J.qZNV4k7G57zrkwl8EVfp5g==.7rlNJw==",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 1,
+      "domains": [
+        "identity"
+      ],
+      "intent": "reflection",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#800080",
+      "fontColor": "#000000",
+      "ratio": "9:16",
+      "font": "Montserrat",
+      "weight": 700,
+      "theme": "dark"
+    },
+    "music": {
+      "song": "Love Me Like You Do (From &quot;Fifty Shades Of Grey&quot;)",
+      "artist": "Ellie Goulding",
+      "image": "https://c.saavncdn.com/391/Fifty-Shades-Of-Grey-English-2015-20191015072653-500x500.jpg",
+      "audio": "https://aac.saavncdn.com/391/d22dd7b77dcbf8512bc524527ad7a477_160.mp4",
+      "clip": {
+        "start": 0,
+        "end": 30
+      }
+    }
+  }
+]
