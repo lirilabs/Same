@@ -1,4 +1,9 @@
+import { readFeed } from "../_lib/readFeed.js";
+import { createThought } from "../_lib/createThought.js";
+import { likeThought } from "../_lib/likeThought.js";
+import { musicSearch } from "../_lib/musicSearch.js";
 import { getMatchedFeed } from "../_lib/matchEngine.js";
+
 
 export default async function handler(req, res) {
   const url = new URL(req.url, "http://x");
