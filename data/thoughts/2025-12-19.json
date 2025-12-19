@@ -31,6 +31,12 @@
         "start": 0,
         "end": 30
       }
+    },
+    "likes": {
+      "count": 1,
+      "users": {
+        "iOnRs5Fu8zVABq7teAXVSupNcN13": true
+      }
     }
   }
 ]
