@@ -1,0 +1,34 @@
+[
+  {
+    "id": "t_mkp21vur",
+    "uid": "8hnc10BUx7UgTa9vHe42IAgK0q72",
+    "ts": 1769062358473,
+    "raw_encrypted": "yK6hdkD+Y+kp7Q6R.YZ+doF49eD9cNnTHOM8aKA==.+vQ=",
+    "semantic": {
+      "emotion": "curiosity",
+      "emotion_intensity": 0.5,
+      "domains": [],
+      "intent": "anticipation",
+      "themes": [],
+      "context_keywords": []
+    },
+    "style": {
+      "color": "#6ea8fe",
+      "fontColor": "#ffffff",
+      "ratio": "9:16",
+      "font": "Roboto",
+      "weight": 500,
+      "theme": "dark"
+    },
+    "music": {
+      "song": "Katchi Sera (From &quot;Think Indie&quot;)",
+      "artist": "Sai Abhyankkar",
+      "image": "https://c.saavncdn.com/118/Katchi-Sera-From-Think-Indie-Tamil-2024-20251026074526-500x500.jpg",
+      "audio": "https://aac.saavncdn.com/118/3456f4e5990e8fb33d7af6678aca034a_160.mp4",
+      "clip": {
+        "start": 36.720635297845305,
+        "end": 65.47216908269962
+      }
+    }
+  }
+]
